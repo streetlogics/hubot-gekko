@@ -13,9 +13,12 @@ client = redis.createClient();
 module.exports = (robot) ->
 
   robot.respond /gekko advice/i, (msg) ->
+    msg.send "getting Gekko advice..."
+    client.get "gekko:advice", (e, reply) ->
+      msg.send "Current Gekko market recommendation for " + reply.market + " is " + reply.data.recommandation
 
-    msg.send "advice from Gekko:"
 
   robot.respond /gekko price/i, (msg) ->
-
-    msg.send "price from Gekko:"
+    msg.send "getting Gekko price..."
+    client.get "gekko:advice", (e, reply) ->
+      msg.send "Current Gekko market price for " + reply.market + " is " + reply.data.price
